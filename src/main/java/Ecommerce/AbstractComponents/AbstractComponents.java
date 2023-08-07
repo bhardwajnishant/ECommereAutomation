@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AbstractComponents {
-	
+	//Web driver
 	WebDriver driver;
 	WebDriverWait wait;
 	public AbstractComponents(WebDriver driver) {
