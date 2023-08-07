@@ -24,7 +24,7 @@ import junit.framework.Assert;
 public class StandAloneTest {
 
 	public static void main(String[] args) throws InterruptedException {
-		//  TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 		String productName = "ZARA COAT 3";
 		String Country = "India";
 		ChromeOptions options = new ChromeOptions();
