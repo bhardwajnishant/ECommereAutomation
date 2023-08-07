@@ -16,6 +16,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import Ecommerce.pageObjects.LandingPage;
+import Ecommerce.pageObjects.ProductCatalouge;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import junit.framework.Assert;
 
@@ -29,26 +31,26 @@ public class StandAloneTest {
 		options.addArguments("--remote-allow-origins=*");
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver = new ChromeDriver(options);
-		driver.get("https://rahulshettyacademy.com/client");
+		
+		LandingPage landingPage = new LandingPage(driver);
+		landingPage.goTo();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		//Login 
-		driver.findElement(By.id("userEmail")).sendKeys("Nishant@gmail.com");
-		driver.findElement(By.id("userPassword")).sendKeys("Password@123");	
-		driver.findElement(By.id("login")).click();
-		List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
+	
+		landingPage.LoginApplication("Nishant@gmail.com", "Password@123");
 		
+		ProductCatalouge productCatalouge = new ProductCatalouge(driver);
+		List<WebElement> products = productCatalouge.getProductList();
+		productCatalouge.addToCart(productName);
 		//find particular product
-		WebElement prod = products.stream().filter(product -> product.findElement(By.cssSelector("h5[style='text-transform: uppercase;']"))
-		.getText().equals(productName)).findFirst().orElse(null);	
+			
 		
 		//Add product in cart
-		prod.findElement(By.cssSelector("button[class='btn w-10 rounded']")).click();
 		
 		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toast-container")));
+		
+		
 		System.out.println("Added to cart");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ng-animating")));
 		
 		Thread.sleep(5000);		
 		driver.findElement(By.xpath("//ul/li[4]/button")).click();
