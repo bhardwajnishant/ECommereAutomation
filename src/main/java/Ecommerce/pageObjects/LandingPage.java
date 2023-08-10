@@ -8,35 +8,44 @@ import org.openqa.selenium.support.PageFactory;
 import Ecommerce.AbstractComponents.AbstractComponents;
 
 public class LandingPage extends AbstractComponents {
-	
+
 	WebDriver driver;
-	
-	public LandingPage(WebDriver driver)
-	{
+
+	public LandingPage(WebDriver driver) {
 		super(driver);
-		
-		this.driver=driver;
-		
-		//initialization
-		
+
+		this.driver = driver;
+
 		PageFactory.initElements(driver, this);
-		
+
 	}
-	@FindBy(id ="userEmail")
+
+	@FindBy(id = "userEmail")
 	WebElement userEmail;
-	
-	@FindBy(id="userPassword")
+
+	@FindBy(id = "userPassword")
 	WebElement passwordEle;
-	
-	@FindBy(id="login")
+
+	@FindBy(id = "login")
 	WebElement submit;
-	
-	public void LoginApplication(String email, String password) {
+
+	@FindBy(css = "div[class*=flyInOut]")
+	WebElement errorMessage;
+
+	public ProductCatalouge LoginApplication(String email, String password) {
 		userEmail.sendKeys(email);
 		passwordEle.sendKeys(password);
 		submit.click();
+		ProductCatalouge productcatalouge = new ProductCatalouge(driver);
+		return productcatalouge;
 	}
-	
+
+	public String invalidLoginMessage() {
+		waitForElementToAppear(errorMessage);
+		String message = errorMessage.getText();
+		return message;
+	}
+
 	public void goTo() {
 		driver.get("https://rahulshettyacademy.com/client");
 	}
