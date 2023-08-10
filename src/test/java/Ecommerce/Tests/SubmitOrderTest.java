@@ -24,17 +24,18 @@ import Ecommerce.pageObjects.CartPage;
 import Ecommerce.pageObjects.CheckOutPage;
 import Ecommerce.pageObjects.ConfirmationPage;
 import Ecommerce.pageObjects.LandingPage;
+import Ecommerce.pageObjects.OrdersPage;
 import Ecommerce.pageObjects.ProductCatalouge;
 import EcommerceTestComponents.BaseTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 //import junit.framework.Assert;
 
 public class SubmitOrderTest extends BaseTest {
+	String productName = "ZARA COAT 3";
 
 	@Test
 	public void submitOrder() throws IOException, InterruptedException {
 
-		String productName = "ZARA COAT 3";
 		String Country = "India";
 		landingPage.goTo();
 		ProductCatalouge productCatalouge = landingPage.LoginApplication("Nishant@gmail.com", "Password@123");
@@ -49,6 +50,15 @@ public class SubmitOrderTest extends BaseTest {
 		ConfirmationPage confirmationPage = checkOutPage.submitOrder();
 		String confirmation = confirmationPage.confirmMessage();
 		Assert.assertEquals(confirmation, "THANKYOU FOR THE ORDER.");
+	}
+
+	@Test(dependsOnMethods={"submitOrder"})
+	public void orderHistory() {
+		landingPage.goTo();
+		ProductCatalouge productCatalouge = landingPage.LoginApplication("Nishant@gmail.com", "Password@123");
+		OrdersPage ordersPage = productCatalouge.goToOrders();
+		Boolean match = ordersPage.VerifyProductDisplay(productName);
+		Assert.assertTrue(match);
 	}
 
 }
