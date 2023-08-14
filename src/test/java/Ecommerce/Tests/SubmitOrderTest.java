@@ -2,6 +2,7 @@ package Ecommerce.Tests;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -35,16 +36,16 @@ public class SubmitOrderTest extends BaseTest {
 	String productName = "ZARA COAT 3";
 
 	@Test(dataProvider="getData")
-	public void submitOrder(String email, String password, String productName) throws IOException, InterruptedException {
+	public void submitOrder(HashMap<String,String> input) throws IOException, InterruptedException {
 
 		String Country = "India";
 		landingPage.goTo();
-		ProductCatalouge productCatalouge = landingPage.LoginApplication(email, password);
+		ProductCatalouge productCatalouge = landingPage.LoginApplication(input.get("email"),input.get("password"));
 		List<WebElement> products = productCatalouge.getProductList();
-		productCatalouge.addToCart(productName);
+		productCatalouge.addToCart(input.get("productName"));
 		CartPage cartpage = productCatalouge.goToCart();
 		Thread.sleep(5000);
-		boolean match = cartpage.VerifyProductDisplay(productName);
+		boolean match = cartpage.VerifyProductDisplay(input.get("productName"));
 		Assert.assertTrue(match);
 		CheckOutPage checkOutPage = cartpage.goToCheckoutPage();
 		checkOutPage.selectCountry();
@@ -63,7 +64,13 @@ public class SubmitOrderTest extends BaseTest {
 	}
 	
 	@DataProvider
-	public Object[][] getData() {
+	public Object[][] getData() throws IOException {
+		List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"\\src\\test\\java\\Ecommerce\\data\\Order.json");
+		return new Object[][]  {{data.get(0)}, {data.get(1)} };
+	}
+	
+	@DataProvider
+	public Object[][] getDataByObject() {
 		return new Object[][]{{"Nishant@gmail.com", "Password@123","ZARA COAT 3"},{"Nishant@gmail.com", "Password@123","ADIDAS ORIGINAL"}};
 	}
 
