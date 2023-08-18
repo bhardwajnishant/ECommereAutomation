@@ -22,13 +22,13 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import Ecommerce.TestComponents.BaseTest;
 import Ecommerce.pageObjects.CartPage;
 import Ecommerce.pageObjects.CheckOutPage;
 import Ecommerce.pageObjects.ConfirmationPage;
 import Ecommerce.pageObjects.LandingPage;
 import Ecommerce.pageObjects.OrdersPage;
 import Ecommerce.pageObjects.ProductCatalouge;
-import EcommerceTestComponents.BaseTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 //import junit.framework.Assert;
 

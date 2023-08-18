@@ -3,12 +3,14 @@ package Ecommerce.Tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.sun.net.httpserver.Authenticator.Retry;
+
+import Ecommerce.TestComponents.BaseTest;
 import Ecommerce.pageObjects.ProductCatalouge;
-import EcommerceTestComponents.BaseTest;
 
 public class ErrorValidation extends BaseTest {
 	
-	@Test
+	@Test(retryAnalyzer = Retry.class)
 	public void LoginInvalidUser() {
 		
 		landingPage.goTo();
