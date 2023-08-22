@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import Ecommerce.pageObjects.CartPage;
+import Ecommerce.pageObjects.OrdersPage;
 
 public class AbstractComponents {
 
@@ -19,6 +20,9 @@ public class AbstractComponents {
 	@FindBy(xpath = "//ul/li[4]/button")
 	WebElement cartButton;
 
+	@FindBy(xpath = "//ul/li[3]/button")
+	WebElement ordersButton;
+	
 	public AbstractComponents(WebDriver driver) {
 		wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 		this.driver = driver;
@@ -43,6 +47,12 @@ public class AbstractComponents {
 		cartButton.click();
 		CartPage cartPage = new CartPage(driver);
 		return cartPage;
+	}
+	
+	public OrdersPage goToOrders() {
+		ordersButton.click();
+		OrdersPage ordersPage = new OrdersPage(driver);
+		return ordersPage;
 	}
 
 }
